@@ -1,0 +1,17 @@
+<?php
+$string['pluginname'] = 'Formulário de Contrato';
+$string['modulename'] = 'Formulário de Contrato';
+$string['modulenameplural'] = 'Formulários de Contrato';
+$string['pluginadministration'] = 'Administração da Atividade de Contrato';
+$string['formularioinscricao:addinstance'] = 'Adicionar novo formulário de contrato';
+$string['formularioinscricao:view'] = 'Visualizar formulário de contrato';
+$string['submitform'] = 'Enviar informações';
+$string['submissionreceived'] = 'Formulário enviado com sucesso!';
+$string['notrequired'] = 'Não obrigatório';
+$string['completiononsubmit'] = 'Concluir atividade ao submeter o formulário';
+$string['completiononsubmit_help'] = 'Concluir atividade ao submeter o formulário';
+$string['completion'] = 'Concluir ao enviar';
+$string['contractactivity:addinstance'] = 'Adicionar nova atividade de contrato';
+$string['contractactivity:view'] = 'Visualizar atividade de contrato';
+$string['contractactivity:submit'] = 'Enviar formulário de contrato';
+$string['contractactivity:viewallsubmissions'] = 'Ver todos os envios';
