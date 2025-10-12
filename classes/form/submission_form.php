@@ -24,6 +24,8 @@
 
 namespace mod_contractactivity\form;
 
+use moodle_url;
+
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
@@ -33,15 +35,20 @@ require_once($CFG->dirroot . '/repository/lib.php');
 
 class submission_form extends \moodleform {
     public function definition() {
-        global $USER, $COURSE, $PAGE;
+        global $USER, $COURSE, $PAGE, $CFG;
+        $PAGE->requires->js_call_amd('mod_contractactivity/main', 'mask');
+        $PAGE->requires->js_call_amd('mod_contractactivity/main', 'validateFiles');
+        $PAGE->requires->js_call_amd('mod_contractactivity/main', 'viaCep');
+
         $mform = $this->_form;
 
         $fileopts = [
             'subdirs' => 0,
-            'maxbytes' => 0,
-            'maxfiles' => 2,
+            'maxbytes' => $COURSE->maxbytes,
+            'areamaxbytes' => 10485760,
+            'maxfiles' => 5,
             'accepted_types' => ['.png', '.jpg', '.jpeg', '.pdf', '.heic', '.heif'],
-            'return_types' => \FILE_INTERNAL
+            'return_types' => \FILE_INTERNAL | \FILE_INTERNAL
         ];
 
         $mform->addElement('text', 'fullname', 'Nome completo');
@@ -62,15 +69,19 @@ class submission_form extends \moodleform {
         $mform->setType('profession', PARAM_TEXT);
         $mform->addRule('profession', 'Campo obrigatório', 'required');
 
-        $mform->addElement('text', 'document', 'Número do RG');
+        $mform->addElement('text', 'document', 'Número do RG ou CNH', ['id' => 'id_document']);
         $mform->setType('document', PARAM_TEXT);
         $mform->addRule('document', 'Campo obrigatório', 'required');
 
-        $mform->addElement('text', 'cpf', 'CPF');
+        $mform->addElement('text', 'cpf', 'CPF', ['id' => 'id_cpf']);
         $mform->setType('cpf', PARAM_TEXT);
         $mform->addRule('cpf', 'Campo obrigatório', 'required');
 
-        $mform->addElement('text', 'address', 'Endereço');
+        $mform->addElement('text', 'postal_code', 'CEP', ['id' => 'id_postal_code']);
+        $mform->setType('postal_code', PARAM_TEXT);
+        $mform->addRule('postal_code', 'Campo obrigatório', 'required');
+
+        $mform->addElement('text', 'address', 'Endereço', ['id' => 'id_address']);
         $mform->setType('address', PARAM_TEXT);
         $mform->addRule('address', 'Campo obrigatório', 'required');
 
@@ -78,20 +89,16 @@ class submission_form extends \moodleform {
         $mform->setType('address_number', PARAM_TEXT);
         $mform->addRule('address_number', 'Campo obrigatório', 'required');
 
-        $mform->addElement('text', 'address_neighbourhood', 'Bairro');
+        $mform->addElement('text', 'address_neighbourhood', 'Bairro', ['id' => 'id_neighbourhood']);
         $mform->setType('address_neighbourhood', PARAM_TEXT);
         $mform->addRule('address_neighbourhood', 'Campo obrigatório', 'required');
 
         $mform->addElement('text', 'address_complement', 'Complemento');
         $mform->setType('address_complement', PARAM_TEXT);
 
-        $mform->addElement('text', 'address_city', 'Cidade');
+        $mform->addElement('text', 'address_city', 'Cidade', ['id' => 'id_city']);
         $mform->setType('address_city', PARAM_TEXT);
         $mform->addRule('address_city', 'Campo obrigatório', 'required');
-
-        $mform->addElement('text', 'postal_code', 'CEP');
-        $mform->setType('postal_code', PARAM_TEXT);
-        $mform->addRule('postal_code', 'Campo obrigatório', 'required');
 
         $mform->addElement('filemanager', 'diploma', 'Diploma (frente e verso)', null, $fileopts);
         $mform->addRule('diploma', 'Campo obrigatório', 'required');
@@ -105,5 +112,33 @@ class submission_form extends \moodleform {
         $mform->addRule('address_proof', 'Campo obrigatório', 'required');
 
         $this->add_action_buttons(true, 'Enviar formulário');
+    }
+
+    public function validation($data, $files) {
+        $errors = [];
+
+        $areas = ['diploma', 'rg_cnh', 'cpf_file', 'address_proof'];
+
+        $fs = get_file_storage();
+        foreach ($areas as $area) {
+            $draftid = $data[$area] ?? 0;
+            $usercontext = \context_user::instance($GLOBALS['USER']->id);
+            $filesinarea = $fs->get_area_files($usercontext->id, 'user', 'draft', $draftid, '', false);
+
+            if (count($filesinarea) < 2 && $area === 'diploma') {
+                $errors[$area] = 'Envie frente e verso do diploma (2 arquivos).';
+            }
+            if (count($filesinarea) < 2 && $area === 'cpf_file') {
+                $errors[$area] = 'Envie frente e verso do cpf (2 arquivos).';
+            }
+            if (count($filesinarea) < 2 && $area === 'rg_cnh') {
+                $errors[$area] = 'Envie frente e verso do RG ou CNH (2 arquivos).';
+            }
+            if (count($filesinarea) < 1 && $area === 'address_proof') {
+                $errors[$area] = 'Envie o comprovante de endereço.';
+            }
+        }
+
+        return $errors;
     }
 }

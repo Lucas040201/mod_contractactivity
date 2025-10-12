@@ -1,6 +1,7 @@
 <?php
-require('../../config.php');
-require_once($CFG->libdir.'/formslib.php');
+global $CFG, $USER;
+require('../../../config.php');
+require_once($CFG->libdir . '/formslib.php');
 require_once(__DIR__.'/../classes/form/submission_form.php');
 
 $submissionid = required_param('submissionid', PARAM_INT);
@@ -20,7 +21,10 @@ $PAGE->set_heading('Editar ou visualizar submissão');
 
 echo $OUTPUT->header();
 
-$form = new \mod_contractactivity\form\submission_form(null, ['context' => $context]);
+$form = new \mod_contractactivity\form\submission_form(
+    new moodle_url('/mod/contractactivity/admin/submission.php', ['submissionid' => $submissionid, 'courseid' => $courseid]),
+    ['context' => $context]
+);
 
 if ($form->is_cancelled()) {
     redirect(new moodle_url('/mod/contractactivity/admin/course.php', ['courseid' => $courseid]));
@@ -42,6 +46,24 @@ if ($form->is_cancelled()) {
     }
 
     redirect($PAGE->url, 'Submissão atualizada com sucesso!');
+}
+
+$fileareas = ['diploma', 'rg_cnh', 'cpf_file', 'address_proof'];
+$usercontext = context_user::instance($USER->id);
+foreach ($fileareas as $area) {
+    $draftitemid = file_get_submitted_draft_itemid($area);
+
+    file_prepare_draft_area(
+        $draftitemid,
+        $context->id,
+        'mod_contractactivity',
+        $area,
+        $submissionid,
+        ['subdirs' => 0, 'maxfiles' => 2],
+        $usercontext->id
+    );
+
+    $submission->{$area} = $draftitemid;
 }
 
 // Preenche formulário com dados existentes

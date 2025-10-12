@@ -38,6 +38,7 @@
             <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
             <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false"/>
             <FIELD NAME="intro" TYPE="text" NOTNULL="false" SEQUENCE="false"/>
+            <FIELD NAME="completiononsubmission" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false" DEFAULT="0"/>
             <FIELD NAME="introformat" TYPE="int" LENGTH="2" NOTNULL="false" SEQUENCE="false"/>
             <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
             <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>

@@ -27,33 +27,50 @@ defined('MOODLE_INTERNAL') || die();
 require_once($CFG->dirroot.'/course/moodleform_mod.php');
 
 class mod_contractactivity_mod_form extends moodleform_mod {
+
     public function definition() {
         $mform = $this->_form;
 
-        // Nome e descrição padrão.
+        // Elementos padrão.
         $this->standard_intro_elements();
-
-        // Configuração simples: nenhum campo adicional.
         $this->standard_coursemodule_elements();
 
+        // Adiciona as regras de conclusão customizadas.
         $this->add_completion_rules();
 
         $this->add_action_buttons();
     }
 
-    public function add_completion_rules() {
+    /**
+     * Adiciona checkbox da regra de conclusão personalizada.
+     */
+    public function add_completion_rules(): array {
         $mform = $this->_form;
 
-        $group = [];
-        $group[] = $mform->createElement('checkbox', 'completiononsubmit', '',
-            get_string('completiononsubmit', 'contractactivity'));
-        $mform->addGroup($group, 'completionoptions', get_string('completion', 'contractactivity'), [' '], false);
-        $mform->addHelpButton('completionoptions', 'completiononsubmit', 'contractactivity');
+        $mform->addElement(
+            'checkbox',
+            'completiononsubmission',
+            '',
+            get_string('completiononsubmission', 'mod_contractactivity')
+        );
+        $mform->setType('completiononsubmission', PARAM_INT);
 
-        return ['completiononsubmit'];
+        return ['completiononsubmission'];
     }
 
-    public function completion_rule_enabled($data) {
-        return !empty($data['completiononsubmit']);
+    /**
+     * Informa ao Moodle se a regra está habilitada.
+     */
+    public function completion_rule_enabled($data): bool {
+        return !empty($data['completiononsubmission']);
+    }
+
+    /**
+     * Prepara valores padrão quando edita a atividade.
+     */
+    public function data_preprocessing(&$default_values) {
+        if (!isset($default_values['completiononsubmission'])) {
+            $default_values['completiononsubmission'] = 0;
+        }
     }
 }

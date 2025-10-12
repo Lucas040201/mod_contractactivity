@@ -1,5 +1,5 @@
 <?php
-require('../../config.php');
+require('../../../config.php');
 require_login();
 require_capability('moodle/site:config', context_system::instance());
 

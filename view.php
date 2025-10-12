@@ -47,7 +47,7 @@ if ($form->is_cancelled()) {
 } else if ($data = $form->get_data()) {
     global $DB, $USER;
 
-    $recordid = $DB->insert_record('contractactivity_submissions', [
+    $submissionid = $DB->insert_record('contractactivity_submissions', [
         'userid' => $USER->id,
         'courseid' => $course->id,
         'fullname' => $data->fullname,
@@ -75,7 +75,7 @@ if ($form->is_cancelled()) {
             $context->id,
             'mod_contractactivity',
             $area,
-            $recordid,
+            $submissionid,
             ['subdirs' => 0, 'maxfiles' => 2]
         );
     }
@@ -83,7 +83,7 @@ if ($form->is_cancelled()) {
     // Marcar como concluído.
     $completion = new completion_info($course);
     if ($completion->is_enabled($cm)) {
-        $completion->update_state($cm, COMPLETION_COMPLETE);
+        $completion->update_state($cm, COMPLETION_COMPLETE, $USER->id);
     }
 
     redirect($PAGE->url, get_string('submissionreceived', 'contractactivity'));
