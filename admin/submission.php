@@ -21,6 +21,12 @@ $PAGE->set_heading('Editar ou visualizar submissão');
 
 echo $OUTPUT->header();
 
+echo html_writer::link(
+    new moodle_url('/mod/contractactivity/admin/generatepdf.php', ['id' => $submission->id]),
+    get_string('generatecontract', 'mod_contractactivity'),
+    ['class' => 'btn btn-primary', 'target' => '_blank']
+);
+
 $form = new \mod_contractactivity\form\submission_form(
     new moodle_url('/mod/contractactivity/admin/submission.php', ['submissionid' => $submissionid, 'courseid' => $courseid]),
     ['context' => $context]

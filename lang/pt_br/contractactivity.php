@@ -16,3 +16,5 @@ $string['contractactivity:view'] = 'Visualizar atividade de contrato';
 $string['contractactivity:submit'] = 'Enviar formulário de contrato';
 $string['contractactivity:viewallsubmissions'] = 'Ver todos os envios';
 $string['completiononsubmission'] = 'Marcar como concluído quando o usuário enviar o formulário';
+$string['generatecontract'] = 'Gerar contrato';
+$string['configpage'] = 'Listagem de cursos';

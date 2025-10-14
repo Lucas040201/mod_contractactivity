@@ -33,6 +33,16 @@ $capabilities = [
         ],
     ],
 
+    'mod/contractactivity:generatetext' => [
+        'riskbitmask' => RISK_PERSONAL,
+        'captype' => 'write',
+        'contextlevel' => CONTEXT_MODULE,
+        'archetypes' => [
+            'teacher' => CAP_ALLOW,
+            'manager' => CAP_ALLOW
+        ],
+    ],
+
     'mod/contractactivity:view' => [
         'captype' => 'read',
         'contextlevel' => CONTEXT_MODULE,

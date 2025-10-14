@@ -60,7 +60,7 @@ class submission_form extends \moodleform {
         $mform->addRule('nationality', 'Campo obrigatório', 'required');
 
         $mform->addElement('select', 'civilstatus', 'Estado civil', [
-            'Solteiro', 'Casado', 'Divorciado', 'Viúvo'
+            'Solteiro(a)', 'Casado(a)', 'Divorciado(a)', 'Viúvo(a)'
         ]);
         $mform->setType('civilstatus', PARAM_TEXT);
         $mform->addRule('civilstatus', 'Campo obrigatório', 'required');
@@ -128,7 +128,8 @@ class submission_form extends \moodleform {
             if (count($filesinarea) < 2 && $area === 'diploma') {
                 $errors[$area] = 'Envie frente e verso do diploma (2 arquivos).';
             }
-            if (count($filesinarea) < 2 && $area === 'cpf_file') {
+
+            if (count($filesinarea) < 2 && count($filesinarea) > 0 && $area === 'cpf_file') {
                 $errors[$area] = 'Envie frente e verso do cpf (2 arquivos).';
             }
             if (count($filesinarea) < 2 && $area === 'rg_cnh') {
