@@ -67,7 +67,6 @@ if ($form->is_cancelled()) {
         'timemodified' => time(),
     ]);
 
-    // Salvar arquivos nas fileareas.
     $fileareas = ['diploma', 'rg_cnh', 'cpf_file', 'address_proof'];
     foreach ($fileareas as $area) {
         file_save_draft_area_files(
@@ -80,7 +79,6 @@ if ($form->is_cancelled()) {
         );
     }
 
-    // Marcar como concluído.
     $completion = new completion_info($course);
     if ($completion->is_enabled($cm)) {
         $completion->update_state($cm, COMPLETION_COMPLETE, $USER->id);

@@ -38,7 +38,6 @@ if ($form->is_cancelled()) {
     $data->id = $submissionid;
     $DB->update_record('contractactivity_submissions', $data);
 
-    // Atualiza arquivos
     $fileareas = ['diploma', 'rg_cnh', 'cpf_file', 'address_proof'];
     foreach ($fileareas as $area) {
         file_save_draft_area_files(
@@ -72,11 +71,9 @@ foreach ($fileareas as $area) {
     $submission->{$area} = $draftitemid;
 }
 
-// Preenche formulário com dados existentes
 $form->set_data($submission);
 $form->display();
 
-// Exibir arquivos enviados
 echo html_writer::tag('h3', 'Arquivos Enviados');
 $fileareas = ['diploma', 'rg_cnh', 'cpf_file', 'address_proof'];
 

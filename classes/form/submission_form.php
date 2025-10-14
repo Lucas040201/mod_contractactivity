@@ -46,7 +46,7 @@ class submission_form extends \moodleform {
             'subdirs' => 0,
             'maxbytes' => $COURSE->maxbytes,
             'areamaxbytes' => 10485760,
-            'maxfiles' => 5,
+            'maxfiles' => 2,
             'accepted_types' => ['.png', '.jpg', '.jpeg', '.pdf', '.heic', '.heif'],
             'return_types' => \FILE_INTERNAL | \FILE_INTERNAL
         ];
@@ -140,6 +140,25 @@ class submission_form extends \moodleform {
             }
         }
 
+        if (!$this->validate_cpf($data['cpf'])) {
+            $errors['cpf'] = get_string('invalidcpf', 'mod_contractactivity');
+        }
+
         return $errors;
+    }
+
+    private function validate_cpf($cpf) {
+        $cpf = preg_replace('/[^0-9]/', '', $cpf);
+        if (strlen($cpf) != 11 || preg_match('/(\d)\1{10}/', $cpf)) return false;
+
+        for ($t = 9; $t < 11; $t++) {
+            $d = 0;
+            for ($c = 0; $c < $t; $c++) {
+                $d += $cpf[$c] * (($t + 1) - $c);
+            }
+            $d = ((10 * $d) % 11) % 10;
+            if ($cpf[$c] != $d) return false;
+        }
+        return true;
     }
 }

@@ -18,3 +18,5 @@ $string['contractactivity:viewallsubmissions'] = 'Ver todos os envios';
 $string['completiononsubmission'] = 'Marcar como concluído quando o usuário enviar o formulário';
 $string['generatecontract'] = 'Gerar contrato';
 $string['configpage'] = 'Listagem de cursos';
+$string['invalidcpf'] = 'CPF inválido';
+$string['cpf'] = 'CPF';
