@@ -69,11 +69,11 @@ class submission_form extends \moodleform {
         $mform->setType('profession', PARAM_TEXT);
         $mform->addRule('profession', 'Campo obrigatório', 'required');
 
-        $mform->addElement('text', 'document', 'Número do RG ou CNH', ['id' => 'id_document']);
+        $mform->addElement('text', 'document', 'RG ou CNH (frente e verso se houver)', ['id' => 'id_document']);
         $mform->setType('document', PARAM_TEXT);
         $mform->addRule('document', 'Campo obrigatório', 'required');
 
-        $mform->addElement('text', 'cpf', 'CPF', ['id' => 'id_cpf']);
+        $mform->addElement('text', 'cpf', 'CPF (não obrigatório caso já tenha o número do RG ou CNH enviado anteriormente)', ['id' => 'id_cpf']);
         $mform->setType('cpf', PARAM_TEXT);
         $mform->addRule('cpf', 'Campo obrigatório', 'required');
 
@@ -100,7 +100,7 @@ class submission_form extends \moodleform {
         $mform->setType('address_city', PARAM_TEXT);
         $mform->addRule('address_city', 'Campo obrigatório', 'required');
 
-        $mform->addElement('filemanager', 'diploma', 'Diploma (frente e verso)', null, $fileopts);
+        $mform->addElement('filemanager', 'diploma', 'Diploma (frente e verso se houver)', null, $fileopts);
         $mform->addRule('diploma', 'Campo obrigatório', 'required');
 
         $mform->addElement('filemanager', 'rg_cnh', 'RG ou CNH (frente e verso)', null, $fileopts);
@@ -125,18 +125,28 @@ class submission_form extends \moodleform {
             $usercontext = \context_user::instance($GLOBALS['USER']->id);
             $filesinarea = $fs->get_area_files($usercontext->id, 'user', 'draft', $draftid, '', false);
 
-            if (count($filesinarea) < 2 && $area === 'diploma') {
-                $errors[$area] = 'Envie frente e verso do diploma (2 arquivos).';
+            $filesinareacount = count($filesinarea);
+
+            if ($filesinareacount == 0 && $area === 'diploma') {
+                $errors[$area] = 'Envie frente e verso do diploma (se houver).';
+            } else if ($area === 'diploma' && $filesinareacount > 2) {
+                $errors[$area] = 'Só é possível enviar até 2 arquivos para o campo de diploma.';
             }
 
-            if (count($filesinarea) < 2 && count($filesinarea) > 0 && $area === 'cpf_file') {
-                $errors[$area] = 'Envie frente e verso do cpf (2 arquivos).';
+            if ($filesinareacount > 1 && $area === 'cpf_file') {
+                $errors[$area] = 'Só é possível enviar um arquivo para o campo CPF.';
             }
-            if (count($filesinarea) < 2 && $area === 'rg_cnh') {
-                $errors[$area] = 'Envie frente e verso do RG ou CNH (2 arquivos).';
+
+            if ($filesinareacount == 0 && $area === 'rg_cnh') {
+                $errors[$area] = 'Envie frente e verso do documento (se houver).';
+            } else if ($area === 'rg_cnh' && $filesinareacount > 2) {
+                $errors[$area] = 'Só é possível enviar até 2 arquivos para o campo de documento.';
             }
-            if (count($filesinarea) < 1 && $area === 'address_proof') {
+
+            if ($filesinareacount == 0 && $area === 'address_proof') {
                 $errors[$area] = 'Envie o comprovante de endereço.';
+            } else if ($filesinareacount > 1 && $area === 'address_proof') {
+                $errors[$area] = 'Só é possível enviar 1 arquivo para o campo de comprovante de endereço.';
             }
         }
 
@@ -148,16 +158,24 @@ class submission_form extends \moodleform {
     }
 
     private function validate_cpf($cpf) {
-        $cpf = preg_replace('/[^0-9]/', '', $cpf);
-        if (strlen($cpf) != 11 || preg_match('/(\d)\1{10}/', $cpf)) return false;
+        $cpf = preg_replace( '/[^0-9]/is', '', $cpf );
+
+        if (strlen($cpf) != 11) {
+            return false;
+        }
+
+        if (preg_match('/(\d)\1{10}/', $cpf)) {
+            return false;
+        }
 
         for ($t = 9; $t < 11; $t++) {
-            $d = 0;
-            for ($c = 0; $c < $t; $c++) {
+            for ($d = 0, $c = 0; $c < $t; $c++) {
                 $d += $cpf[$c] * (($t + 1) - $c);
             }
             $d = ((10 * $d) % 11) % 10;
-            if ($cpf[$c] != $d) return false;
+            if ($cpf[$c] != $d) {
+                return false;
+            }
         }
         return true;
     }
