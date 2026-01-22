@@ -69,11 +69,11 @@ class submission_form extends \moodleform {
         $mform->setType('profession', PARAM_TEXT);
         $mform->addRule('profession', 'Campo obrigatório', 'required');
 
-        $mform->addElement('text', 'document', 'RG ou CNH (frente e verso se houver)', ['id' => 'id_document']);
+        $mform->addElement('text', 'document', 'Número do RG', ['id' => 'id_document']);
         $mform->setType('document', PARAM_TEXT);
         $mform->addRule('document', 'Campo obrigatório', 'required');
 
-        $mform->addElement('text', 'cpf', 'CPF (não obrigatório caso já tenha o número do RG ou CNH enviado anteriormente)', ['id' => 'id_cpf']);
+        $mform->addElement('text', 'cpf', 'Número do CPF', ['id' => 'id_cpf']);
         $mform->setType('cpf', PARAM_TEXT);
         $mform->addRule('cpf', 'Campo obrigatório', 'required');
 
@@ -103,10 +103,10 @@ class submission_form extends \moodleform {
         $mform->addElement('filemanager', 'diploma', 'Diploma (frente e verso se houver)', null, $fileopts);
         $mform->addRule('diploma', 'Campo obrigatório', 'required');
 
-        $mform->addElement('filemanager', 'rg_cnh', 'RG ou CNH (frente e verso)', null, $fileopts);
+        $mform->addElement('filemanager', 'rg_cnh', 'RG ou CNH (frente e verso se houver)', null, $fileopts);
         $mform->addRule('rg_cnh', 'Campo obrigatório', 'required');
 
-        $mform->addElement('filemanager', 'cpf_file', 'CPF (não obrigatório)', null, $fileopts);
+        $mform->addElement('filemanager', 'cpf_file', 'CPF (não obrigatório caso já tenha o número do RH ou CNH enviado anteriormente)', null, $fileopts);
 
         $mform->addElement('filemanager', 'address_proof', 'Comprovante de endereço', null, $fileopts);
         $mform->addRule('address_proof', 'Campo obrigatório', 'required');

@@ -21,9 +21,7 @@
             <FIELD NAME="address_complement" TYPE="text" NOTNULL="false"  SEQUENCE="false"/>
             <FIELD NAME="address_neighbourhood" TYPE="text" NOTNULL="true"  SEQUENCE="false"/>
             <FIELD NAME="address_city" TYPE="text" NOTNULL="true"  SEQUENCE="false"/>
-            <FIELD NAME="address_state" TYPE="text" NOTNULL="true"  SEQUENCE="false"/>
             <FIELD NAME="postal_code" TYPE="text" NOTNULL="true"  SEQUENCE="false"/>
-            <FIELD NAME="done" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0"  SEQUENCE="false"/>
             <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
             <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>
         </FIELDS>
