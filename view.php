@@ -84,7 +84,7 @@ if ($form->is_cancelled()) {
         $completion->update_state($cm, COMPLETION_COMPLETE, $USER->id);
     }
 
-    redirect($PAGE->url, get_string('submissionreceived', 'contractactivity'));
+    redirect($PAGE->url, get_string('submissionreceived', 'mod_contractactivity'));
 }
 
 

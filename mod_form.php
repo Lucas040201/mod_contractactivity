@@ -31,6 +31,13 @@ class mod_contractactivity_mod_form extends moodleform_mod {
     public function definition() {
         $mform = $this->_form;
 
+        $mform->addElement('text', 'name', get_string('name'), ['size' => '64']);
+        $mform->setType('name', PARAM_TEXT);
+        $mform->addRule('name', null, 'required', null, 'client');
+
+        // Valor padrão (opcional, mas recomendado)
+        $mform->setDefault('name', get_string('modulename', 'contractactivity'));
+
         // Elementos padrão.
         $this->standard_intro_elements();
         $this->standard_coursemodule_elements();

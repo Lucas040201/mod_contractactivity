@@ -72,7 +72,7 @@ function contractactivity_extend_settings_navigation($settingsnav, navigation_no
     if (has_capability('mod/contractactivity:viewallsubmissions', $context)) {
         $url = new moodle_url('/mod/contractactivity/admin/index.php');
         $node->add(
-            get_string('pluginadministration', 'contractactivity'),
+            get_string('pluginadministration', 'mod_contractactivity'),
             $url,
             navigation_node::TYPE_SETTING,
             null,
