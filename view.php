@@ -98,7 +98,7 @@ echo $OUTPUT->header();
 
 if (has_capability('mod/contractactivity:viewallsubmissions', $context)) {
     echo html_writer::link(
-        new moodle_url('/mod/contractactivity/admin/course.php', ['courseid' => $course->id]),
+        new moodle_url('/mod/contractactivity/admin/course.php', ['courseid' => $course->id, 'instanceid' => $cm->instance]),
         'Ver todos os envios'
     );
 } else {

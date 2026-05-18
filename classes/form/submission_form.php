@@ -96,7 +96,7 @@ class submission_form extends \moodleform {
         $mform->addElement('text', 'address_complement', 'Complemento');
         $mform->setType('address_complement', PARAM_TEXT);
 
-        $mform->addElement('text', 'address_city', 'Cidade', ['id' => 'id_city']);
+        $mform->addElement('text', 'address_city', 'Cidade/Estado', ['id' => 'id_city']);
         $mform->setType('address_city', PARAM_TEXT);
         $mform->addRule('address_city', 'Campo obrigatório', 'required');
 
@@ -106,7 +106,7 @@ class submission_form extends \moodleform {
         $mform->addElement('filemanager', 'rg_cnh', 'RG ou CNH (frente e verso se houver)', null, $fileopts);
         $mform->addRule('rg_cnh', 'Campo obrigatório', 'required');
 
-        $mform->addElement('filemanager', 'cpf_file', 'CPF (não obrigatório caso já tenha o número do RH ou CNH enviado anteriormente)', null, $fileopts);
+        $mform->addElement('filemanager', 'cpf_file', 'CPF (não obrigatório caso já tenha o número do RG ou CNH enviado anteriormente)', null, $fileopts);
 
         $mform->addElement('filemanager', 'address_proof', 'Comprovante de endereço', null, $fileopts);
         $mform->addRule('address_proof', 'Campo obrigatório', 'required');

@@ -2,6 +2,7 @@
 require('../../../config.php');
 
 $courseid = required_param('courseid', PARAM_INT);
+$instanceid = required_param('instanceid', PARAM_INT);
 require_login($courseid);
 $context = context_course::instance($courseid);
 require_capability('mod/contractactivity:viewallsubmissions', $context);
@@ -15,7 +16,7 @@ echo $OUTPUT->header();
 global $DB;
 
 // Busca instâncias da atividade neste curso
-$activity = $DB->get_record('contractactivity', ['course' => $courseid]);
+$activity = $DB->get_record('contractactivity', ['id' => $instanceid]);
 
 if (!$activity) {
     echo $OUTPUT->notification('Nenhuma atividade encontrada neste curso.', 'error');

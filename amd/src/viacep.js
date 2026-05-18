@@ -80,7 +80,7 @@ const init = async () => {
 
                 $address.val(response.logradouro || '');
                 $neighbourhood.val(response.bairro || '');
-                $city.val(response.localidade || '');
+                $city.val(response.localidade + ' - ' + response.uf || '');
             } catch (error) {
                 console.error('Erro ao consultar o CEP:', error);
                 alert('Erro ao consultar o CEP.');
