@@ -28,7 +28,7 @@ if (empty($courses)) {
     $table->head = ['Curso', 'Ações'];
 
     foreach ($courses as $course) {
-        $link = new moodle_url('/mod/contractactivity/admin/course.php', ['courseid' => $course->id]);
+        $link = new moodle_url('/mod/contractactivity/admin/activities.php', ['courseid' => $course->id]);
         $table->data[] = [
             format_string($course->fullname),
             html_writer::link($link, 'Ver inscrições')
