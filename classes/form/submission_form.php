@@ -106,7 +106,7 @@ class submission_form extends \moodleform {
         $mform->addElement('filemanager', 'rg_cnh', 'RG ou CNH (frente e verso se houver)', null, $fileopts);
         $mform->addRule('rg_cnh', 'Campo obrigatório', 'required');
 
-        $mform->addElement('filemanager', 'cpf_file', 'CPF (não obrigatório caso já tenha o número do RG ou CNH enviado anteriormente)', null, $fileopts);
+        $mform->addElement('filemanager', 'cpf_file', 'CPF (não obrigatório caso já tenha o número no RG ou CNH enviado anteriormente)', null, $fileopts);
 
         $mform->addElement('filemanager', 'address_proof', 'Comprovante de endereço', null, $fileopts);
         $mform->addRule('address_proof', 'Campo obrigatório', 'required');
