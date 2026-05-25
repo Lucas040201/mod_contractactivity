@@ -34,7 +34,7 @@ $textoContrato = <<<HTML
 <p><b>QUALIFICAÇÃO DAS PARTES:</b><br /><br /></p>
 <p style="text-align: justify;"><b>CONTRATANTE:</b> {$student_name}, {$nationality}, {$civil_status}, {$profession}, portador(a) da cédula de identidade R.G. nº {$student_document} e CPF/MF nº {$cpf_document}, residente e domiciliado(a) em {$address}.</p>
 
-<p style="text-align: justify;"><b>CONTRATADA: ATC Soluções Educacionais Ltda. – ME</b>, com sede na Rua Salvador Cabral, 345 – Centro – Mogi das Cruzes – SP, inscrita no CNPJ sob o nº 65.014.535/0001-67, neste ato representada por <b>Leonardo Gonçalves Canalli</b>, brasileiro, empresário, portador da cédula de identidade R.G. nº 49.566.588-5 e CPF/MF nº 374.672.018-42.</p>
+<p style="text-align: justify;"><b>CONTRATADA: ATC - Escola de Aviação Civil</b>, com sede na Rua Salvador Cabral, 345 – Centro – Mogi das Cruzes – SP, inscrita no CNPJ sob o nº 23.903.893/0001-80, neste ato representada por <b>Leonardo Gonçalves Canalli</b>, brasileiro, empresário, portador da cédula de identidade R.G. nº 49.566.588-5 e CPF/MF nº 374.672.018-42.</p>
 
 <p style="text-align: justify;">As partes firmam o presente contrato, que se regerá pela legislação vigente, especialmente o Código de Defesa do Consumidor, legislação educacional aplicável, normas do Ministério da Educação (MEC), bem como pelo Regimento Interno, Manual do Aluno, Edital do curso, políticas institucionais e demais regulamentos da CONTRATADA, que passam a integrar este instrumento independentemente de transcrição.<br /><br /></p>
 
@@ -131,7 +131,7 @@ V – Eventuais tolerâncias não implicam renúncia de direitos.<br /><br />
 <p><b>Mogi das Cruzes, {$today}</b><br /><br /></p>
 
 <p><b>CONTRATANTE</b><br />{$student_name}<br /><br /></p>
-<p><b>CONTRATADA</b><br />ATC Soluções Educacionais Ltda. – ME<br />Leonardo Gonçalves Canalli</p>
+<p><b>CONTRATADA</b><br />ATC - Escola de Aviação Civil<br />Leonardo Gonçalves Canalli</p>
 HTML;
 
 
